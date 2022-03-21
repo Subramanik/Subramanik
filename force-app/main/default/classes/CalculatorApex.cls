@@ -9,4 +9,8 @@ public with sharing class CalculatorApex {
     public static Integer subMethod(Integer a, Integer b){
         return a - b;
     }
+
+    public static Integer mulMethod(Integer a, Integer b){
+        return a*b;
+    }
 }
