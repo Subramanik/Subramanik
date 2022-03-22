@@ -13,4 +13,8 @@ public with sharing class CalculatorApex {
     public static Integer mulMethod(Integer a, Integer b){
         return a*b;
     }
+
+    public static Integer divMethod(Integer a, Integer b){
+        return a/b;
+    }
 }
