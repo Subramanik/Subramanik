@@ -110,11 +110,6 @@ jobs:
         with:
             flags: Apex
 
-      # Housekeeping
-      - name: 'Delete scratch org'
-        if: always()
-        run: sfdx force:org:delete -p -u ci-org
-
   runs-security-check:
     name: runs-security-check
     runs-on: ubuntu-latest
