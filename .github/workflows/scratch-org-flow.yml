@@ -68,8 +68,8 @@ jobs:
 
       # Connect with Salesforce ORG
       - name: 'Authorize a DevHub ORG'
-        working-directory: .github/jwt/
-        run: sfdx auth:jwt:grant --clientid ${{ secrets.DEVHUB_CONSUMER_KEY }} --jwtkeyfile server.key --username ${{ secrets.DEVHUB_USERNAME }} --instanceurl ${{ secrets.DEVHUB_URL }} --setdefaultdevhubusername -a 'hub-org'
+        working-directory: .github/workflows/jwt/
+        run: sfdx auth:jwt:grant --clientid ${{ secrets.CONNECTED_APP_CONSUMER_KEY }} --jwtkeyfile server.key --username ${{ secrets.HUB_ORG_USERNAME }} -d --instanceurl ${{ secrets.SFDC_HOST_LOGIN }} --setdefaultdevhubusername -a 'hub-org'
   
     # Run Salesforce CLI Scanner For Security checks
       - name: 'List All ORGS'
