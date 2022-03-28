@@ -56,6 +56,7 @@ jobs:
             content_type: text/html
             # Optional converting Markdown to HTML (set content_type to text/html too):
             convert_markdown: true
+
   environment-setup:
   
     name: environment-setup
@@ -123,7 +124,7 @@ jobs:
       # Connect with Salesforce ORG
       - name: 'Connect with Salesforce ORG'
         working-directory: .github/jwt/
-        run: sfdx auth:jwt:grant --clientid ${{ secrets.SALESFORCE_CONSUMER_KEY }} --jwtkeyfile server.key --username ${{ secrets.SALESFORCE_USERNAME }} -d --instanceurl ${{ secrets.SFDC_PROD_URL }} --setalias ${{ secrets.PROD_ALIAS }}
+        run: sfdx auth:jwt:grant --clientid ${{ secrets.CONNECTED_APP_CONSUMER_KEY }} --jwtkeyfile server.key --username ${{ secrets.HUB_ORG_USERNAME }} -d --instanceurl ${{ secrets.SFDC_HOST_LOGIN }} --setalias ${{ secrets.PROD_ALIAS }}
   
       # Run Salesforce CLI Scanner For Security checks
       - name: 'List All ORGS'
@@ -131,15 +132,15 @@ jobs:
         
       # Deploy source to org
       - name: 'Perform the validation against UAT Sandbox'
-        run: sfdx force:source:deploy --checkonly --sourcepath 'force-app/main/default' --testlevel 'NoTestRun' --targetusername 'sfdcpanther-prod-org'
+        run: sfdx force:source:deploy --checkonly --sourcepath 'force-app/main/default' --testlevel 'NoTestRun' --targetusername 'subramani-dev-prod'
 
       # Deploy source to org
       - name: 'Perform the Deployment'
-        run: sfdx force:source:deploy --sourcepath 'force-app/main/default' --testlevel 'NoTestRun' --targetusername 'sfdcpanther-prod-org'
+        run: sfdx force:source:deploy --sourcepath 'force-app/main/default' --testlevel 'NoTestRun' --targetusername 'subramani-dev-prod'
 
       # Run Apex tests in scratch org
       - name: 'Run Apex tests'
-        run: sfdx force:apex:test:run -c -r human --testlevel 'RunLocalTests' -d ./tests/apex -w 20 --targetusername 'sfdcpanther-prod-org' --codecoverage
+        run: sfdx force:apex:test:run -c -r human --testlevel 'RunLocalTests' -d ./tests/apex -w 20 --targetusername 'subramani-dev-prod' --codecoverage
 
       # Upload code coverage data
       - name: 'Upload code coverage for Apex to Codecov.io'
@@ -159,13 +160,13 @@ jobs:
             username: ${{ secrets.EMAIL_USERNAME }}
             password: ${{ secrets.EMAIL_PASSWORD }}
             # email subject
-            subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}
+            subject: Devops Check ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}
             # email body as text
             body: ${{ github.job }} job in worflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }}
             # comma-separated string, send email to
-            to: sfdcpanther@gmail.com,amit.a.panther@gmail.com
+            to: subramaniofficialmail@gmail.com
             # from email name
-            from: AMIT SINGH
+            from: Subramani Devops Check
             # Optional unsigned/invalid certificates allowance:
             ignore_cert: true
             # Optional content type (defaults to text/plain):
