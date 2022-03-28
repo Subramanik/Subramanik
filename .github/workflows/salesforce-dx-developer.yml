@@ -95,11 +95,15 @@ jobs:
         
       # Deploy source to org
       - name: 'Perform the validation against Developer Sandbox'
-        run: sfdx force:source:deploy --checkonly --sourcepath 'force-app/main/default' --testlevel 'NoTestRun' --targetusername 'sfdcpanther-prod-org'
+        run: sfdx force:source:deploy --checkonly -x package/package.xml --testlevel 'NoTestRun' --targetusername 'sfdcpanther-prod-org'
 
       # Deploy source to org
       - name: 'Perform the Deployment'
-        run: sfdx force:source:deploy --sourcepath 'force-app/main/default' --testlevel 'NoTestRun' --targetusername 'sfdcpanther-prod-org'
+        run: sfdx force:source:deploy -x package/package.xml --testlevel 'NoTestRun' --targetusername 'sfdcpanther-prod-org'
+
+      # Deploy source to org
+      - name: 'Perform Destructive Changes'
+        run: sfdx force:mdapi:deploy -d destructiveChanges --testlevel 'NoTestRun' --targetusername 'sfdcpanther-prod-org'
 
       # Run Apex tests in scratch org
       - name: 'Run Apex tests'
